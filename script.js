@@ -3,7 +3,7 @@ console.log('it works');
 const canvas = document.querySelector('#etch-a-sketch');
 const ctx = canvas.getContext('2d');
 const shake = document.querySelector('.shake');
-const MOVE_AMOUNT = 100;
+const MOVE_AMOUNT = 50;
 
 // setup our canvas for drawing
 
@@ -36,13 +36,13 @@ const draw = ({ key }) => {
     case 'ArrowUp':
       y = y - MOVE_AMOUNT;
       break;
-      case 'ArrowDown':
+    case 'ArrowDown':
       y = y + MOVE_AMOUNT;
       break;
-      case 'ArrowRight':
+    case 'ArrowRight':
       x = x + MOVE_AMOUNT;
       break;
-      case 'ArrowLeft':
+    case 'ArrowLeft':
       x = x - MOVE_AMOUNT;
       break;
     default:
@@ -66,10 +66,17 @@ const clearCanvas = () => {
   ctx.clearRect(0, 0, width, height);
   canvas.addEventListener('animationed', () => {
     canvas.classList.remove('shake');
-  }, { once: true}
+  }, { once: true }
   );
 };
 
 // listen for arrow keys
 window.addEventListener('keydown', handleKey);
 shake.addEventListener('click', clearCanvas);
+
+// javascript for the new buttons
+const moveButtons = document.querySelectorAll('.command');
+const handleMoveButtons = event => {
+  draw({ key: event.target.dataset.command });
+};
+moveButtons.forEach(button => button.addEventListener('click', handleMoveButtons));
